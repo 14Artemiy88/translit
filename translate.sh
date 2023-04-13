@@ -1,7 +1,7 @@
 #!/bin/bash
 
 str="$( xclip -o | grep -o '.')"
-en="$(echo $str | grep -i '[a-z]')"
+en="$(echo "$str" | grep -i '[a-z]')"
 if [ "$en" != "" ]; then
     declare -A lettersArray=(
         ['q']="й" ['Q']="Й"    ['a']="ф" ['A']="Ф"    ['z']="я" ['Z']="Я"    ['`']="ё" ['~']="Ё"
@@ -35,7 +35,6 @@ else
 fi
 
 letters=""
-
 readarray -t words <<<"$str"
 for letter in "${words[@]}"; do
     if [ "${lettersArray[$letter]}" = "" ] || [ "$letter" = " " ]; then
@@ -45,6 +44,5 @@ for letter in "${words[@]}"; do
     fi
 done
 
-printf "$letters" | xclip -selection clipboard;
+echo "$letters" | xclip -selection clipboard
 xdotool key "ctrl+v"
-
